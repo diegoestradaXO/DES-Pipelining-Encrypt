@@ -1,5 +1,23 @@
-#include <stdio.h>      /* printf */
-#include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
+/*********************************************
+UNIVERSIDAD DEL VALLE DE GUATEMALA
+CC3056 - Programación de Microprocesadores
+Ciclo 2 - 2019
+Autores: Gerardo Méndez y Diego Estrada
+Fecha: 24/09/2019
+Archivo: encrypt_pipelining.cpp
+------------------Descripcion--------------------
+    PROYECTO 3 - Encripción DES utilizando 4 rondas, 
+    longitud de bloque 8. Se compila desde terminal de
+    Raspberry
+---------------------Build-----------------------
+ 	$ ./des -d inputFile outputFile keys
+	$ ./des -e inputFile outputFile keys
+--------------------Pendiente---------------------
+- Implementar variables mutex
+**********************************************/
+
+#include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
