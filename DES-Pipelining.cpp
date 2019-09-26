@@ -208,9 +208,9 @@ pthread_mutex_t mutexLock;
 pthread_attr_t attr;
 
 /*
--Funcion para que expande la cadena de 32 a 48 bits
--Parametro : posición y valor
--Retorno : --
+Nombre: expansion_function
+Parámetros: posicion, valor
+Objetivo: expandir cadena hasta 48 bits
 */
 void expansion_function(int pos, int text)
 {
@@ -220,9 +220,9 @@ void expansion_function(int pos, int text)
 }
 
 /*
--Funcion que realiza la permutación inicial de DES
--Parametro : posicion, valor
--Retorno : --
+Nombre: initialPermitation
+Parámetros: posición, valor
+Objetivo: realizar permutación inicial de Data Encryption Standard
 */
 int initialPermutation(int pos, int text)
 {
@@ -234,9 +234,9 @@ int initialPermutation(int pos, int text)
 }
 
 /*
--Funcion que permite determinar la S-box correspondinete
--Parametro : indice del ciclo (entero)
--Retorno : --
+Nombre: F1
+Parámetros: index
+Objetivo: asignar S-box
 */
 int F1(int i)
 {
@@ -265,9 +265,9 @@ int F1(int i)
 }
 
 /*
--Funcion para aplicar la operación XOR a dos valores
--Parametro : valor de la cadena y valor de la llave
--Retorno : XOR entre valor 1 y valor 2
+Nombre: XOR
+Parámetros: a (cadena), b(key)
+Objetivo: realizar un XOR entre dos datos
 */
 int XOR(int a, int b)
 {
@@ -275,9 +275,9 @@ int XOR(int a, int b)
 }
 
 /*
--Funcion para convertir a bits el valor dado
--Parametro : valor a convertir a bits
--Retorno : --
+Nombre: ToBits
+Parámetros: valor entero
+Objetivo: convertir a bits el entero provisto
 */
 int ToBits(int value)
 {
@@ -298,9 +298,9 @@ int ToBits(int value)
 }
 
 /*
--Funcion para aplicar a una cadena la función S-Box 
--Parametro : cadena de 48 bits 
--Retorno : --
+Nombre: SBox
+Parámetros: cadena de 48 bit
+Objetivo: utilizar SBox a una cadena
 */
 int SBox(int XORtext[])
 {
@@ -318,9 +318,9 @@ int SBox(int XORtext[])
 }
 
 /*
--Funcion que reordena en función al arreglo P[]
--Parametro : posición y valor
--Retorno : --
+Nombre: PBox
+Parámetros: posición, valor
+Objetivo: Reorganización con P[]
 */
 int PBox(int pos, int text)
 {
@@ -332,9 +332,9 @@ int PBox(int pos, int text)
 }
 
 /*
--Funcion que cifra la cadena derecha
--Parametro : el número de ronda, modo de cifrado
--Retorno : --
+Nombre: cipher
+Parámetros: ronda, tipo de cifrado
+Objetivo: Cifrar cadena (right)
 */
 void cipher(long k)
 {
@@ -363,9 +363,9 @@ void cipher(long k)
 }
 
 /*
--Funcion para realizar la permjutación final DES
--Parametro : posición y valor
--Retorno : --
+Nombre: finalPermutation
+Parámetros: posicion, valor
+Objetivo: permutar cadena para encriptar
 */
 void finalPermutation(int pos, int text)
 {
@@ -378,9 +378,9 @@ void finalPermutation(int pos, int text)
 }
 
 /*
--Funcion para convertir un caracter en binario
--Parametro : caracter a convertir
--Retorno : --
+Nombre: convertToBinary
+Parámetros: entero a convertir
+Objetivo: pasar un entero a binario
 */
 void convertToBinary(int n)
 {
@@ -399,9 +399,9 @@ void convertToBinary(int n)
 }
 
 /*
--Funcion para convertir los caracteres del archivo input en numero binarios
--Parametro : cantidad de caracteres en el archivo input / 8
--Retorno : --
+Nombre: convertCharToBit
+Parámetros: numero de caracteres en el archivo de entrada
+Objetivo: realizar la conversión de los caracteres del archivo de entrada a numeros binarios.
 */
 int convertCharToBit(long int n)
 {
@@ -476,7 +476,7 @@ void Encryption(long int plain[])
 -Funcion para convertir la clave de 56 bits a 48 bits y asi poderla usar en cada ronda.
 	estas claves son almacendas en el arreglo de 48 bits
 -Parametros : fila, columna y valor  
--Retrono: --
+-Retorno: --
 */
 void key56to48(int round, int pos, int text)
 {
@@ -493,7 +493,7 @@ void key56to48(int round, int pos, int text)
 /*
 -Funcion para convertir la clave leida de 64 bits a 56 bits
 -Parametros : posición el bit en el arreglo, valor del bit 
--Retrono: 
+-Retorno: 
 */
 int key64to56(int pos, int text)
 {
@@ -601,9 +601,11 @@ void key64to48(unsigned int key[])
 		int shift = SHIFTS[x - 1];
 		long r = (shift*100) + x;
 		
+		//creacion de pthreads, uno por cada parte (left, right) de la llave
 		pthread_create(&(ptids[16-x]), NULL, shift1, (void *)r);
 		pthread_create(&(ptids[32-x]), NULL, shift2, (void *)r);
-			
+		
+		//join de los pthreads
 		pthread_join(ptids[16-x], NULL);
 		pthread_join(ptids[32-x], NULL);
 	}
